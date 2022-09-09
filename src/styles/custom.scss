@@ -1,0 +1,10 @@
+@import "variables";
+@import "fonts";
+@import "navbar";
+
+@import '@sweetalert2/theme-wordpress-admin/wordpress-admin';
+@import '~bootstrap/scss/bootstrap.scss';
+
+body{
+  font-family: $sans-serif;
+}
