@@ -12,7 +12,7 @@ export const ListUsers = () => {
     const [users, setUsers] = useState([])
     const [roles, setRoles] = useState([])
     const [updateShowModal, setUpdateShowModal] = React.useState(false);
-    const [updateUserData, setUpdateUserData] = React.useState("");
+    const [updateUserId, setUpdateUserId] = React.useState("");
     useEffect(() => {
         requestUsers(setUsers);
         requestRoles(setRoles);
@@ -22,7 +22,7 @@ export const ListUsers = () => {
         <div className="table-responsive">
             <p className="font-open-sans display-6 text-light">Usuarios</p>
             {AddUser({user, roles})}
-            {UpdateUser({user, roles, updateShowModal, setUpdateShowModal, updateUserData})}
+            {UpdateUser({user, roles, updateShowModal, setUpdateShowModal, updateUserId})}
 
             <table className="table text-center">
                 <thead>
@@ -56,7 +56,7 @@ export const ListUsers = () => {
                                     className="btn btn-warning"
                                     onClick={() => {
                                         setUpdateShowModal(true)
-                                        setUpdateUserData(get(u, 'attributes'))
+                                        setUpdateUserId(get(u, 'id'))
                                     }}
                                 >
                                     <i className="fa-solid fa-user-pen"></i>

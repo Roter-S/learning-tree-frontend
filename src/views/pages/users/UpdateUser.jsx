@@ -13,15 +13,16 @@ export const UpdateUser = (
         roles,
         updateShowModal,
         setUpdateShowModal,
-        updateUserData
+        updateUserId
     }) => {
     const [fields, setFields] = useState(user)
     const handleOnChange = onChangeUser(fields, setFields);
     useEffect(()=>{
-        if(updateUserData && Object.keys(updateUserData).length){
-            setFields(updateUserData)
+
+        if(updateUserId && Object.keys(updateUserId).length){
+            setFields(updateUserId)
         }
-    },[updateUserData])
+    },[updateUserId])
     const updateUser = useCallback(async (e) => {
         e.preventDefault()
         await FetchPost(API_URL.users, fields)
