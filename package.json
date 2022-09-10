@@ -2,6 +2,7 @@
   "name": "learning-tree-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://roter-s.github.io/learning-tree-frontend/",
   "dependencies": {
     "@sweetalert2/theme-wordpress-admin": "^5.0.12",
     "@testing-library/jest-dom": "^5.16.5",
@@ -10,6 +11,7 @@
     "bootstrap": "^5.2.1",
     "chart.js": "^3.9.1",
     "eslint": "8.22.0",
+    "gh-pages": "^4.0.0",
     "lodash": "^4.17.21",
     "rc-table": "^7.27.2",
     "react": "^18.2.0",
@@ -23,6 +25,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages-d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
