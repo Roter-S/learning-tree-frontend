@@ -27,7 +27,7 @@ export const UpdateUser = (
         await FetchPut(API_URL.users, fields, updateUserId)
         setUpdateShowModal(false)
         refreshUser()
-    }, [fields, updateUserId])
+    }, [fields, refreshUser, setUpdateShowModal, updateUserId])
 
     return (
         <>
