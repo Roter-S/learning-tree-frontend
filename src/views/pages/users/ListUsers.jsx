@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import {get} from 'lodash';
 import {requestRoles, requestUsers} from './Utilities'
 import {AddUser} from "./AddUser";
 import {UpdateUser} from "./UpdateUser";
+import {alertConfirm} from "../../../component/common/alertConfirm";
+import {FetchDelete} from "../../../utils/FetchDelete";
+import {API_URL} from "../../../utils/FetchApi";
+
 const user = {
     "name": "", "last_name": "", "email": "", "date_of_birth": "", "password": "", "roles": []
 }
@@ -18,12 +22,37 @@ export const ListUsers = () => {
         requestRoles(setRoles);
     }, [refresh])
 
+    const onDeleteUser = useCallback(async (id) => {
+        await FetchDelete(API_URL.users, id)
+        refreshUser()
+    }, [refreshUser])
+
+    const handleDelete = (id) => {
+        let parameters = {
+            title: 'Eliminar',
+            text: '¿Esta seguro de eliminar?',
+            icon: 'warning',
+            titleConfirm: '¡Eliminado!',
+            textConfirm: 'Usuario eliminado correctamente',
+            confirmButtonText: 'Si, eliminar'
+        }
+        alertConfirm(parameters, onDeleteUser, id)
+    }
+
+    function refreshUser() {
+        setRefresh(!refresh)
+    }
+
     return (<div className="container">
         <div className="table-responsive">
             <p className="font-open-sans display-6 text-light">Usuarios</p>
-            {AddUser({user, roles})}
-            {UpdateUser({user, roles, updateShowModal, setUpdateShowModal, updateUserId})}
-
+            {AddUser({user, roles, refreshUser})}
+            {UpdateUser({user, roles, updateShowModal, setUpdateShowModal, updateUserId, refreshUser})}
+            <button className="btn btn-info" onClick={() => {
+                refreshUser();
+            }}>
+                <i className="fa-solid fa-rotate"></i>
+            </button>
             <table className="table text-center">
                 <thead>
                 <tr className="text-light fw-bold">
@@ -37,7 +66,6 @@ export const ListUsers = () => {
                 </thead>
                 <tbody className="text-light">
                 {users.map(u => {
-                    console.log(u)
                     const id = get(u, 'id', '')
                     const name = get(u, 'attributes.name', '')
                     const last_name = get(u, 'attributes.last_name', '')
@@ -50,18 +78,25 @@ export const ListUsers = () => {
                         <td>{email}</td>
                         <td>{date_of_birth}</td>
                         <td>
-                            <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <div className="btn-group" role="group">
                                 <button
                                     type="button"
+                                    key={id}
                                     className="btn btn-warning"
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setUpdateUserId(get(u, 'id', ''))
                                         setUpdateShowModal(true)
-                                        setUpdateUserId(get(u, 'id'))
                                     }}
                                 >
                                     <i className="fa-solid fa-user-pen"></i>
                                 </button>
-                                <button type="button" className="btn btn-danger">
+                                <button type="button" className="btn btn-danger"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleDelete(get(u, 'id', ''))
+                                        }}
+                                >
                                     <i className="fa-solid fa-user-minus"></i>
                                 </button>
                             </div>
@@ -71,9 +106,5 @@ export const ListUsers = () => {
                 </tbody>
             </table>
         </div>
-        <button onClick={() => {
-            setRefresh(!refresh)
-        }}>refresh
-        </button>
     </div>);
 }

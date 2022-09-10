@@ -3,6 +3,7 @@ import {Sidebar} from "./sidebar";
 import {API_URL} from "../../../utils/FetchApi";
 import {useNavigate} from "react-router-dom";
 import {Toast} from "../Toast";
+import {Dropdown} from "react-bootstrap";
 
 export const IndexNavbar = (props) => {
     const token = localStorage.getItem('token');
@@ -36,20 +37,20 @@ export const IndexNavbar = (props) => {
                 </a>
 
                 <div className="d-flex">
-                    <div className="btn-group dropstart text-light">
-                        <button type="button" className="btn dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                    <Dropdown
+                        drop="start"
+                    >
+                        <Dropdown.Toggle variant="" id="dropdown-basic">
                             {props.name}
-                        </button>
-                        <ul className="dropdown-menu dropdown-menu-dark">
-                            <li>
-                                <button className="dropdown-item" onClick={logout}>
-                                    <i className="fa-solid fa-right-from-bracket me-2"></i>
-                                    Cerrar sesión
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu variant="dark">
+                            <Dropdown.Item onClick={logout}>
+                                <i className="fa-solid fa-right-from-bracket me-2"></i>
+                                Cerrar sesión
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
 
                 </div>
             </div>

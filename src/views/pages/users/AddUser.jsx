@@ -9,7 +9,8 @@ import {onChangeUser} from "./Utilities";
 export const AddUser = (
     {
         user,
-        roles
+        roles,
+        refreshUser
     }) => {
     const [fields, setFields] = useState(user)
     const [createShowModal, setCreateShowModal] = React.useState(false);
@@ -17,6 +18,8 @@ export const AddUser = (
     const createUser = useCallback(async (e) => {
         e.preventDefault()
         await FetchPost(API_URL.users, fields)
+        setCreateShowModal(false)
+        refreshUser()
     }, [fields])
 
     return (

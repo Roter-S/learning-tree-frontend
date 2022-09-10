@@ -1,11 +1,9 @@
 import React, {useCallback, useEffect, useState} from "react";
-import FetchPost from "../../../utils/FetchPost";
+import FetchPut from "../../../utils/FetchPut";
 import {API_URL} from "../../../utils/FetchApi";
 import ModalForm from "../../../component/common/ModalForm";
 import userForm from "./userForm";
-import {onChangeUser} from "./Utilities";
-
-
+import {onChangeUser, requestUser} from "./Utilities";
 
 export const UpdateUser = (
     {
@@ -13,20 +11,23 @@ export const UpdateUser = (
         roles,
         updateShowModal,
         setUpdateShowModal,
-        updateUserId
+        updateUserId,
+        refreshUser
     }) => {
     const [fields, setFields] = useState(user)
     const handleOnChange = onChangeUser(fields, setFields);
-    useEffect(()=>{
-
-        if(updateUserId && Object.keys(updateUserId).length){
-            setFields(updateUserId)
+    useEffect(() => {
+        if (updateUserId) {
+            requestUser(setFields, updateUserId)
         }
-    },[updateUserId])
+    }, [updateUserId])
+
     const updateUser = useCallback(async (e) => {
         e.preventDefault()
-        await FetchPost(API_URL.users, fields)
-    }, [fields])
+        await FetchPut(API_URL.users, fields, updateUserId)
+        setUpdateShowModal(false)
+        refreshUser()
+    }, [fields, updateUserId])
 
     return (
         <>

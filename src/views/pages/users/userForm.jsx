@@ -11,7 +11,6 @@ export default function userForm(fetchFn, handleOnChange, fields, roles, setModa
                        handleOnChange(e, "name")
                    }}
                    value={fields["name"] || ""}
-                   defaultValue={fields["name"] || ""}
                    required
             />
 
@@ -23,7 +22,6 @@ export default function userForm(fetchFn, handleOnChange, fields, roles, setModa
                        handleOnChange(e, "last_name")
                    }}
                    value={fields["last_name"] || ""}
-                   defaultValue={fields["last_name"] || ""}
                    required
             />
 
@@ -36,7 +34,6 @@ export default function userForm(fetchFn, handleOnChange, fields, roles, setModa
                        handleOnChange(e, "email")
                    }}
                    value={fields["email"] || ""}
-                   defaultValue={fields["email"] || ""}
                    required
             />
 
@@ -49,24 +46,22 @@ export default function userForm(fetchFn, handleOnChange, fields, roles, setModa
                        handleOnChange(e, "date_of_birth")
                    }}
                    value={fields["date_of_birth"] || ""}
-                   defaultValue={fields["date_of_birth"] || ""}
                    required
             />
 
         </div>
         {isAdd &&
-        <div className="col-md-6">
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input type="password" className="form-control" id="password"
-                   onChange={(e) => {
-                       handleOnChange(e, "password")
-                   }}
-                   value={fields["password"] || ""}
-                   defaultValue={fields["password"] || ""}
-                   required
-            />
+            <div className="col-md-6">
+                <label htmlFor="password" className="form-label">Contraseña</label>
+                <input type="password" className="form-control" id="password"
+                       onChange={(e) => {
+                           handleOnChange(e, "password")
+                       }}
+                       value={fields["password"] || ""}
+                       required
+                />
 
-        </div>
+            </div>
         }
         <div className="col-md-6">
             {roles.map(r => {
@@ -77,7 +72,7 @@ export default function userForm(fetchFn, handleOnChange, fields, roles, setModa
                            onChange={() => {
                                handleOnChange(id, "roles")
                            }}
-                           value={fields["roles"] || []}
+                           value={id || ''}
                            checked={fields["roles"] && fields['roles'].includes(id)}
                     />
                     <label className="form-check-label">

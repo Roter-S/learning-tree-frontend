@@ -1,4 +1,5 @@
 import {FetchGet} from "../../../utils/FetchGet";
+import {FetchShow} from "../../../utils/FetchShow";
 import {API_URL} from "../../../utils/FetchApi";
 
 export const requestUsers = (setUsers) => {
@@ -6,6 +7,10 @@ export const requestUsers = (setUsers) => {
 }
 export const requestRoles = (setRoles) => {
     FetchGet(setRoles, API_URL.roles);
+}
+
+export const requestUser = (setFields, id) => {
+    FetchShow(API_URL.users, setFields, id);
 }
 
 export function onChangeUser(fields, setFields) {
