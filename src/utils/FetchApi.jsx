@@ -1,5 +1,5 @@
 const proto = 'http'
-const host = '127.0.0.1:8000/api'
+const host = '174.129.182.105/api'
 
 export const API_URL = {
     "users": proto + '://' + host + '/users',
